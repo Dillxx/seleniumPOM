@@ -11,7 +11,7 @@ class UserLoginObj(object):
 
     def __init__(self):
         """初始化 driver 对象"""
-        self.driver = DriverUtil.get_driver()
+        self.driver = DriverUtil.get_driver("user")
         # 说明：优化传值方式，需要修改元素值时，在初始化方法中修改即可
         #      将元素的定位方法以及特征值封装成属性，能够实现集中管理目标元素对象
         self.name = (By.NAME, 'user')   # 账号

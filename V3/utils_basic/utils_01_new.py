@@ -4,6 +4,8 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
+from utils import CaptchaCode
+
 
 class DriverUtil(object):
     """存放 __driver 对象"""
@@ -12,19 +14,31 @@ class DriverUtil(object):
     __driver = None  # 设置 驱动对象， 给一个初始值 ； 初始化执行一次
 
     @classmethod
-    def get_driver(cls):
+    def get_driver(cls, Name_code):
         """
         获取 __driver 对象
 
         说明： 判断每次使用的都为同一个 driver对象
         :return: 返回 driver 对象
         """
+        # if cls.__driver is None:  # 如果是第一次创建 __driver 则赋值 __driver 对象
+        #     cls.option = webdriver.ChromeOptions()
+        #     cls.option.add_argument('--start-maximized')
+        #     cls.path = Service(r'F:\down_software\chrome-win\chromedriver.exe')
+        #     cls.__driver = webdriver.Chrome(service=cls.path, options=cls.option)
+        #     cls.__driver.get('http://192.168.10.130:8080/jpress/user/login')
+        #     cls.__driver.implicitly_wait(10)
+        # return cls.__driver  # 如果第一次 创建__driver 对象，则返回该对象；  如果是已经存在 __driver对象，则跳过赋值对象，直接返回已存在的对象
         if cls.__driver is None:  # 如果是第一次创建 __driver 则赋值 __driver 对象
             cls.option = webdriver.ChromeOptions()
             cls.option.add_argument('--start-maximized')
             cls.path = Service(r'F:\down_software\chrome-win\chromedriver.exe')
             cls.__driver = webdriver.Chrome(service=cls.path, options=cls.option)
-            cls.__driver.get('http://192.168.10.130:8080/jpress/user/login')
+            if Name_code == 'user':
+                cls.__driver.get('http://192.168.10.130:8080/jpress/user/login')
+            elif Name_code == 'adminUser':
+                cls.__driver.get('http://192.168.10.130:8080/jpress/admin/login')
+                cls.captch_code = CaptchaCode()  # 实例化验证码处理对象
             cls.__driver.implicitly_wait(10)
         return cls.__driver  # 如果第一次 创建__driver 对象，则返回该对象；  如果是已经存在 __driver对象，则跳过赋值对象，直接返回已存在的对象
 
