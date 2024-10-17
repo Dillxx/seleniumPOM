@@ -37,6 +37,7 @@ class DriverUtil(object):
                 cls.__driver.get('http://192.168.10.130:8080/jpress/user/login')
             elif Name_code == 'adminUser':
                 cls.__driver.get('http://192.168.10.130:8080/jpress/admin/login')
+                cls.captch_code = CaptchaCode()  # 实例化验证码处理对象
             cls.__driver.implicitly_wait(10)
         return cls.__driver  # 如果第一次 创建__driver 对象，则返回该对象；  如果是已经存在 __driver对象，则跳过赋值对象，直接返回已存在的对象
 

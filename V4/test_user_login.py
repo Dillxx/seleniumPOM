@@ -21,7 +21,7 @@ class TestUserLogin(object):
 
     # 采用 setup_class  teardown_class 在测试用例执行之前加载驱动，执行之后关闭驱动
     def setup_class(self):
-        self.driver = DriverUtil.get_driver()  # 获取 driver 对象
+        # self.driver = DriverUtil.get_driver()  # 获取 driver 对象
         self.goto = UserLoginTask()
 
     def teardown_class(self):
