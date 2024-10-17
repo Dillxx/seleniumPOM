@@ -1,7 +1,6 @@
 import os
 import pytest
 import urllib3  # 忽略 urllib3 版本警告信息
-import pandas as pd
 
 from V5.user_login_page import UserLoginTask
 from utils import DriverUtil, TDD
