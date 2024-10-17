@@ -2,10 +2,16 @@
 import datetime
 import logging
 import os
+import random
 import time
 import logging.handlers
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+import pandas as pd
+from PIL import Image
+from selenium.webdriver.common.by import By
+
+from chaojiying_Python.chaojiying import Chaojiying_Client
 
 
 class DriverUtil(object):
@@ -15,7 +21,7 @@ class DriverUtil(object):
     __driver = None  # 设置 驱动对象， 给一个初始值 ； 初始化执行一次
 
     @classmethod
-    def get_driver(cls):
+    def get_driver(cls, Name_code):
         """
         获取 __driver 对象
 
@@ -27,7 +33,10 @@ class DriverUtil(object):
             cls.option.add_argument('--start-maximized')
             cls.path = Service(r'F:\down_software\chrome-win\chromedriver.exe')
             cls.__driver = webdriver.Chrome(service=cls.path, options=cls.option)
-            cls.__driver.get('http://192.168.10.130:8080/jpress/user/login')
+            if Name_code == 'user':
+                cls.__driver.get('http://192.168.10.130:8080/jpress/user/login')
+            elif Name_code == 'adminUser':
+                cls.__driver.get('http://192.168.10.130:8080/jpress/admin/login')
             cls.__driver.implicitly_wait(10)
         return cls.__driver  # 如果第一次 创建__driver 对象，则返回该对象；  如果是已经存在 __driver对象，则跳过赋值对象，直接返回已存在的对象
 
@@ -44,7 +53,7 @@ class DriverUtil(object):
             # 为了在任何情况下都存在 __driver 对象，因此需要再次对 __driver 对象赋值
 
 
-import pandas as pd
+
 
 
 class TDD(object):
@@ -56,12 +65,26 @@ class TDD(object):
         用户登录--账号-密码-预期值
         :return:
         """
-        # path = os.path.dirname(os.path.abspath(__file__)) + "\\data" + "\\pytestDemo.csv"
+        # path = os.path.dirname(os.path.abspath(__file__)) + "\\data" + "\\normal_user_data.csv"
         data = pd.read_csv(path, encoding='GB2312')
         data1 = []
         for i in range(len(data['username'])):
             data1.append((data['username'][i], str(data['pwd'][i]), data['expected'][i], data['code'][i]))
         return data1
+
+    @classmethod
+    def get_admin_user_data(cls, path):
+        """
+        用户登录--账号-密码-预期值
+        :return:
+        """
+        # path = os.path.dirname(os.path.abspath(__file__)) + "\\data" + "\\normal_user_data.csv"
+        data = pd.read_csv(path, encoding='GB2312')
+        data1 = []
+        for i in range(len(data['username'])):
+            data1.append((data['username'][i], str(data['pwd'][i]), str(data['captcha'][i]), data['expected'][i], data['code'][i]))
+        return data1
+
 
 
 class Logger(object):
@@ -104,10 +127,68 @@ class Logger(object):
             cls.logger.addHandler(f_handler)
         return cls.logger
 
+
+class CaptchaCode(object):
+    """处理验证码"""
+
+    def get_VC(self, driver, pic_id):
+        """
+        # 获取验证码图片
+        :param driver: chrome webdriver
+        :param pic_id: 验证码定位元素
+        :return: 验证码图片字符串
+        """
+        # driver.implicitly_wait(10)
+        # 截取全屏
+        time1 = time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime(time.time()))
+        img_path = os.path.dirname(os.path.abspath(__file__)) + '\\' + 'screenshots' + '\\' + time1 + '.png'
+        # print(img_path)
+        driver.save_screenshot(img_path)
+
+        # 获取验证码元素定位
+        img_ele = driver.find_element(By.XPATH, pic_id)
+        # 获取验证码图片在屏幕中的位置
+        loca = img_ele.location
+        size = img_ele.size
+        # 获取屏幕是缩放比
+        dpr = driver.execute_script('return window.devicePixelRatio')
+
+        # 由于 当前屏幕缩放率为 125% ，会影响原来的 100% 缩放比，导致截取不到验证码图片，因此 *1.25 解决该问题
+        # rangle = (loca['x'] * 1.25, loca['y'] * 1.25, size['width'] * 1.25 + loca['x'] * 1.25,
+        #           size['height'] * 1.25 + loca['y'] * 1.25)
+        rangle = (loca['x'] * dpr, loca['y'] * dpr, size['width'] * dpr + loca['x'] * dpr,
+                  size['height'] * dpr + loca['y'] * dpr)
+
+        # 打开上面保存的全屏截图图片
+        i = Image.open(img_path)
+        # 截取并保存验证码图片， crop 传入元组参数：左-上-右-下
+        img_yanzheng = i.crop(rangle)
+        time2 = time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime(time.time())) + str(random.randint(1, 1000))
+        img_path2 = os.path.dirname(os.path.abspath(__file__)) + '\\' + 'screenshots' + '\\' + time1 + '.png'
+        img_yanzheng.save(img_path2)
+        pic_str = self.get_yanzheng(img_path2)
+        return pic_str
+
+    def get_yanzheng(self, img):
+        """
+        # 超级鹰识别验证码
+        :param img: 验证码图片
+        :return: 验证码字符串
+        """
+        chaojiying = Chaojiying_Client('cndill', '123456789Qx.', '963468')  # 用户中心>>软件ID 生成一个替换 96001
+        im = open(img, 'rb').read()  # 本地图片文件路径 来替换 a.jpg 有时WIN系统须要//
+        pic_str = chaojiying.PostPic(im, 1004)['pic_str']
+        return pic_str
+
+
 # if __name__ == '__main__':
 # 说明： 实例方法 替换为 类方法，省略实例化类步骤
 #
 # DriverUtil.get_driver()
 # DriverUtil.quit_driver()
-# print(TDD.get_user_data())
+#     path = os.path.dirname(os.path.abspath(__file__)) + "\\data" + "\\admin_user_data.csv"
+#     print(TDD.get_admin_user_data(path))
+#     a = 'nan'
+#     a = '2434'
+#     print(a)
 # print(os.path.dirname(os.path.abspath(__file__)) + '\\V6\\logs\\all.log')

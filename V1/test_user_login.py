@@ -11,7 +11,7 @@ urllib3.disable_warnings()
 
 
 def get_data():
-    data = pd.read_csv(r'D:\桌面\测试开发\Postman\seleniumPom\data\pytestDemo.csv', encoding='GB2312')
+    data = pd.read_csv(r'D:\桌面\测试开发\Postman\seleniumPom\data\normal_user_data.csv', encoding='GB2312')
     data1 = []
     for i in range(len(data['username'])):
         data1.append((data['username'][i], str(data['pwd'][i]), data['expected'][i]))
