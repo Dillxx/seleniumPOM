@@ -8,11 +8,13 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from V0.test_admin_login import TestAdminLogin
+from utils import RandomData
 
 
 class TestAdminArticle(object):
     def setup_class(self):
         self.driver = TestAdminLogin().driver
+        self.random_data = RandomData()
     # def __init__(self, login):
     #     self.login = login
 
@@ -23,7 +25,7 @@ class TestAdminArticle(object):
     @pytest.mark.dependency(depends=["admin_login"], scope="module")
     def test_invalidcase(self):
         # data
-        title = 'postman'
+        title = 'postman' + self.random_data.gen_random_str()
         father = 'python'
         slug = ''
         expected = 'slug 不能为空'
@@ -51,7 +53,7 @@ class TestAdminArticle(object):
     @pytest.mark.dependency(depends=["admin_login"], scope="module")
     def test_validcase(self):
         # data
-        title = 'postman'
+        title = 'postman' + self.random_data.gen_random_str()
         father = 'python'
         slug = 'postman'
         expected = ''
@@ -70,5 +72,5 @@ class TestAdminArticle(object):
 
 
 if __name__ == '__main__':
-    pytest.mian(['-sv', 'test_admin_login.py'])
-    pytest.mian(['-sv', 'test_admin_article.py'])
+    pytest.mian(['-sv', 'test_admin_login.py', 'test_admin_article.py'])
+    # pytest.mian(['-sv', 'test_admin_article.py'])

@@ -13,8 +13,6 @@ urllib3.disable_warnings()
 path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\data" + "\\admin_user_data.csv"
 
 
-
-
 class TestAdminLogin:
     def setup_class(self):
         self.options = webdriver.ChromeOptions()
@@ -25,8 +23,8 @@ class TestAdminLogin:
         self.driver.implicitly_wait(10)
         self.captch_code = CaptchaCode()   # 实例化验证码处理对象
 
-    def teardown_class(self):
-        self.driver.quit()
+    # def teardown_class(self):
+    #     self.driver.quit()
 
     # def __init__(self):
     #     self.options = webdriver.ChromeOptions()

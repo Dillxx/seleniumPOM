@@ -3,6 +3,7 @@ import datetime
 import logging
 import os
 import random
+import string
 import time
 import logging.handlers
 from selenium import webdriver
@@ -181,6 +182,15 @@ class CaptchaCode(object):
         pic_str = chaojiying.PostPic(im, 1004)['pic_str']
         return pic_str
 
+
+class RandomData(object):
+    def gen_random_str(self):
+        """
+        # 生成一个 8位 的随机字符串（字母+数字）
+        :return:
+        """
+        rand_str = ''.join(random.sample(string.ascii_letters + string.digits, 8))
+        return rand_str
 
 # if __name__ == '__main__':
 # 说明： 实例方法 替换为 类方法，省略实例化类步骤
