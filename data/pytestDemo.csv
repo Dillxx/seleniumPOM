@@ -1,4 +1,0 @@
-username,pwd,expected,code
-admin,123456,用户名或密码不正确,0
-admin123,123456,用户名不正确。,0
-admin,admin123,用户中心,1

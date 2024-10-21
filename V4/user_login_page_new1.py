@@ -11,7 +11,7 @@ class UserLoginObj(object):
 
     def __init__(self):
         """初始化 driver 对象"""
-        self.driver = DriverUtil.get_driver()
+        self.driver = DriverUtil.get_driver('user')
 
     # def get_element(self):
     #     """获取账号、密码、登录元素"""

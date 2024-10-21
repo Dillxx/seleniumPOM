@@ -16,7 +16,7 @@ urllib3.disable_warnings()
 
 class TestUserLogin(object):
     # 数据驱动数据
-    path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\data" + "\\pytestDemo.csv"
+    path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\data" + "\\normal_user_data.csv"
 
     # 采用 setup_class  teardown_class 在测试用例执行之前加载驱动，执行之后关闭驱动
     def setup_class(self):
@@ -26,7 +26,7 @@ class TestUserLogin(object):
         # self.driver = webdriver.Chrome(service=self.path, options=self.options)
         # self.driver.get('http://192.168.10.130:8080/jpress/user/login')
         # self.driver.implicitly_wait(10)
-        self.driver = DriverUtil.get_driver()  # 获取 driver 对象
+        self.driver = DriverUtil.get_driver("user")  # 获取 driver 对象
 
     def teardown_class(self):
         # self.driver.quit()

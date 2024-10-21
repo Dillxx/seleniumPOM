@@ -1,7 +1,6 @@
 import os
 import pytest
 import urllib3  # 忽略 urllib3 版本警告信息
-import pandas as pd
 
 from V5.user_login_page import UserLoginTask
 from utils import DriverUtil, TDD
@@ -11,11 +10,11 @@ urllib3.disable_warnings()
 
 class TestUserLogin(object):
     # 数据驱动数据
-    path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\data" + "\\pytestDemo.csv"
+    path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\data" + "\\normal_user_data.csv"
 
     # 采用 setup_class  teardown_class 在测试用例执行之前加载驱动，执行之后关闭驱动
     def setup_class(self):
-        self.driver = DriverUtil.get_driver()  # 获取 driver 对象
+        # self.driver = DriverUtil.get_driver("user")  # 获取 driver 对象
         self.goto = UserLoginTask()
 
     def teardown_class(self):
