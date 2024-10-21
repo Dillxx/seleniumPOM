@@ -44,13 +44,13 @@ class TestAdminLogin:
         self.driver.find_element(By.NAME, 'pwd').send_keys(pwd)
 
         self.driver.find_element(By.NAME, 'captcha').clear()
-        if code == 1:
+        if code == '1':
             captcha = self.driverutil.captch_code.get_VC(self.driver, '//div[@class="form-group"]/img')
             self.driver.find_element(By.NAME, 'captcha').send_keys(captcha)
             self.driver.find_element(By.XPATH, '//div/button[@class="btn btn-primary btn-block btn-flat"]').click()
             WebDriverWait(self.driver, 5).until(EC.title_is(expected))
             assert self.driver.title == expected
-        elif code == 0:
+        elif code == '0':
             self.driver.find_element(By.NAME, 'captcha').send_keys(captcha)
             self.driver.find_element(By.XPATH, '//div/button[@class="btn btn-primary btn-block btn-flat"]').click()
             WebDriverWait(self.driver, 5).until(EC.alert_is_present())

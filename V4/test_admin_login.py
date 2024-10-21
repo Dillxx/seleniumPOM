@@ -1,23 +1,15 @@
 # -*- coding: utf-8 -*-
 import os
-
 import pytest
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import urllib3  # 忽略 urllib3 版本警告信息
-
-from V3.utils_basic.utils_01_new import DriverUtil
 from V4.admin_login_page import AdminLoginTask
-from utils import CaptchaCode, TDD
+from utils import TDD
 
 urllib3.disable_warnings()
 path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\data" + "\\admin_user_data.csv"
 
 
-class TestAdminLogin:
+class TestAdminLogin(object):
     def setup_class(self):
         self.admin_login_task = AdminLoginTask()
 
@@ -31,4 +23,5 @@ class TestAdminLogin:
 
 
 if __name__ == '__main__':
-    pytest.mian(['-sv', __file__])
+    pytest.mian(['-sv', 'test_admin_login.py'])
+

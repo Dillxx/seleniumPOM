@@ -102,3 +102,7 @@ class AdminLoginTask(object):
         self.admin_login_handle.click_btn()
         # 判断弹窗
         self.admin_login_handle.assignment_alert(expected, code)
+
+    def driver_quit(self):
+        """退出 driver 对象"""
+        self.admin_login_handle.admin_login_page.driver.quit()

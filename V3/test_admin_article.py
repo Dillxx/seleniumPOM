@@ -43,7 +43,7 @@ class TestAdminArticle(object):
         WebDriverWait(self.driver, 5).until(
             EC.visibility_of_element_located((By.XPATH, '//div[@class="toast-message"]')))
         err = self.driver.find_element(By.XPATH, '//div[@class="toast-message"]').text
-
+        print('------------', err, '-----------------')
         # 判断是否与期望输入一致
         assert err == expected
 

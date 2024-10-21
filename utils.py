@@ -87,6 +87,20 @@ class TDD(object):
             data1.append((data['username'][i], str(data['pwd'][i]), str(data['captcha'][i]), data['expected'][i], str(data['code'][i])))
         return data1
 
+    @classmethod
+    def get_admin_essay_classify_data(cls, path):
+        """
+        用户登录--账号-密码-预期值
+        :return:
+        """
+        # path = os.path.dirname(os.path.abspath(__file__)) + "\\data" + "\\normal_user_data.csv"
+        data = pd.read_csv(path, encoding='GB2312')
+        data1 = []
+        for i in range(len(data['title'])):
+            data1.append((data['title'][i], data['father'][i], data['slug'][i], data['expected'][i],
+                          str(data['code'][i])))
+        return data1
+
 
 
 class Logger(object):
@@ -192,14 +206,8 @@ class RandomData(object):
         rand_str = ''.join(random.sample(string.ascii_letters + string.digits, 8))
         return rand_str
 
-# if __name__ == '__main__':
-# 说明： 实例方法 替换为 类方法，省略实例化类步骤
-#
-# DriverUtil.get_driver()
-# DriverUtil.quit_driver()
-#     path = os.path.dirname(os.path.abspath(__file__)) + "\\data" + "\\admin_user_data.csv"
-#     print(TDD.get_admin_user_data(path))
-#     a = 'nan'
-#     a = '2434'
-#     print(a)
-# print(os.path.dirname(os.path.abspath(__file__)) + '\\V6\\logs\\all.log')
+
+if __name__ == '__main__':
+    # 说明： 实例方法 替换为 类方法，省略实例化类步骤
+    print(TDD.get_admin_essay_classify_data(
+        r'D:\桌面\测试开发\selenium\projectDemo\seleniumPom\data\admin_essay_classify_data.csv'))
