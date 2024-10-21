@@ -3,6 +3,7 @@
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/V4/admin_login_page.py" charset="GBK" />
     <file url="file://$PROJECT_DIR$/V5/admin_login_page.py" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/V6/base.py" charset="GBK" />
     <file url="file://$PROJECT_DIR$/git_test.py" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

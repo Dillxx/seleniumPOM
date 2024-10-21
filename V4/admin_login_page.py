@@ -62,12 +62,12 @@ class AdminLoginHandle(object):
 
     def assignment_alert(self, expected, code):
         """弹窗处理"""
-        if code == 0:
+        if code == '0':
             WebDriverWait(self.admin_login_page.driver, 5).until(EC.alert_is_present())
             alert = self.admin_login_page.driver.switch_to.alert
             assert alert.text == expected
             alert.accept()
-        elif code == 1:
+        elif code == '1':
             # captcha = self.captcha_code.get_VC(self.admin_login_page.driver, '//div[@class="form-group"]/img')
             WebDriverWait(self.admin_login_page.driver, 5).until(EC.title_is(expected))
             assert self.admin_login_page.driver.title == expected
@@ -95,7 +95,7 @@ class AdminLoginTask(object):
         # 输入密码
         self.admin_login_handle.input_pwd(pwd)
         # 输入验证码
-        if code == 1:
+        if code == '1':
             captcha = self.admin_login_handle.get_captcha_value()
         self.admin_login_handle.input_captcha(captcha)
         # 点击登录

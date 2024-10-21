@@ -84,7 +84,7 @@ class TDD(object):
         data = pd.read_csv(path, encoding='GB2312')
         data1 = []
         for i in range(len(data['username'])):
-            data1.append((data['username'][i], str(data['pwd'][i]), str(data['captcha'][i]), data['expected'][i], data['code'][i]))
+            data1.append((data['username'][i], str(data['pwd'][i]), str(data['captcha'][i]), data['expected'][i], str(data['code'][i])))
         return data1
 
 

@@ -7,7 +7,8 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from V0.test_admin_login import TestAdminLogin
+from V3.test_admin_login import TestAdminLogin
+from V3.utils_basic.utils_01_new import DriverUtil
 from utils import RandomData
 
 
@@ -15,14 +16,11 @@ class TestAdminArticle(object):
     def setup_class(self):
         self.driver = TestAdminLogin().driver
         self.random_data = RandomData()
-    # def __init__(self, login):
-    #     self.login = login
 
     def teardown_class(self):
         self.driver.quit()
 
     # 输入空 slug
-    # @pytest.mark.dependency(depends=["admin_login"], scope="module")
     def test_invalidcase(self):
         # data
         title = 'postman' + self.random_data.gen_random_str()
@@ -50,7 +48,6 @@ class TestAdminArticle(object):
         assert err == expected
 
     # 输入有效类
-    # @pytest.mark.dependency(depends=["admin_login"], scope="module")
     def test_validcase(self):
         # data
         title = 'postman' + self.random_data.gen_random_str()

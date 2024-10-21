@@ -19,35 +19,14 @@ path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "\\data" + 
 
 class TestAdminLogin:
     def setup_class(self):
-        # self.driverutil = DriverUtil()  # 获取 webdriver 对象
-        # self.driver = self.driverutil.get_driver('adminUser')
         self.admin_login_task = AdminLoginTask()
 
-    def teardown_class(self):
-        self.admin_login_task.quit_driver()
+    # def teardown_class(self):
+    #     self.admin_login_task.quit_driver()
 
     # 正确用户名密码
     @pytest.mark.parametrize('username, pwd, captcha, expected, code', TDD.get_admin_user_data(path))
     def test_vaildcase(self, username, pwd, captcha, expected, code):
-        # self.driver.find_element(By.NAME, 'user').clear()
-        # self.driver.find_element(By.NAME, 'user').send_keys(username)
-        # self.driver.find_element(By.NAME, 'pwd').clear()
-        # self.driver.find_element(By.NAME, 'pwd').send_keys(pwd)
-        #
-        # self.driver.find_element(By.NAME, 'captcha').clear()
-        # if code == 1:
-        #     captcha = self.driverutil.captch_code.get_VC(self.driver, '//div[@class="form-group"]/img')
-        #     self.driver.find_element(By.NAME, 'captcha').send_keys(captcha)
-        #     self.driver.find_element(By.XPATH, '//div/button[@class="btn btn-primary btn-block btn-flat"]').click()
-        #     WebDriverWait(self.driver, 5).until(EC.title_is(expected))
-        #     assert self.driver.title == expected
-        # elif code == 0:
-        #     self.driver.find_element(By.NAME, 'captcha').send_keys(captcha)
-        #     self.driver.find_element(By.XPATH, '//div/button[@class="btn btn-primary btn-block btn-flat"]').click()
-        #     WebDriverWait(self.driver, 5).until(EC.alert_is_present())
-        #     alert = self.driver.switch_to.alert
-        #     assert alert.text == expected
-        #     alert.accept()
         self.admin_login_task.go_to(username, pwd, captcha, expected, code)
 
 

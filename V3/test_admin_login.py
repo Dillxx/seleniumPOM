@@ -27,8 +27,8 @@ class TestAdminLogin:
         self.driverutil = DriverUtil()  # 获取 webdriver 对象
         self.driver = self.driverutil.get_driver('adminUser')
 
-    def teardown_class(self):
-        self.driverutil.quit_driver()
+    # def teardown_class(self):
+    #     self.driverutil.quit_driver()
 
     # 正确用户名密码
     @pytest.mark.parametrize('username, pwd, captcha, expected, code', TDD.get_admin_user_data(path))
